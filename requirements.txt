@@ -1,0 +1,13 @@
+dash>=1.12.0
+pandas>=0.24.1
+gunicorn>=19.9.0
+docx2python
+base64
+os
+urllib.parse
+flask
+copy
+docx
+numpy
+plotly
+datetime

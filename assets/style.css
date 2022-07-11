@@ -1,0 +1,235 @@
+/* Custom App CSS Below --------------------------------- */
+/*Fonts ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+/* Main Layout ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+body {
+  background-color: #1E1E1E;
+  color: #d8d8d8;
+  margin: 0;
+  padding: 0;
+}
+h1, h2, h3, h4, h5 {
+  font-family: "Open Sans";
+  font-weight: bold;
+  letter-spacing: 2.1px;
+  padding-left: 12px;
+}
+p {
+  font-family: "Open Sans";
+  font-weight: 400;
+  font-size: 14px;
+  padding-left: 12px;
+}
+a {
+  text-decoration: none;
+}
+label{
+  display: block;
+}
+
+.bg-grey{
+  background-color: #31302F;
+}
+.text-padding{
+  padding: 5px;
+}
+
+/*Stolen from admin example app*/
+body{background-color:#fff}
+#auth{height:90vh;overflow-x:hidden}
+#auth #auth-right{background:url(../../images/bg/4853433.jpg),linear-gradient(90deg,#2d499d,#3f5491);height:100%}
+#auth #auth-left{padding:5rem 8rem}
+#auth #auth-left .auth-title{font-size:3rem;margin-bottom:1rem}
+#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.1rem;line-height:2.0rem}
+#auth #auth-left .auth-logo{margin-bottom:7rem}
+#auth #auth-left .auth-logo img{height:2rem}
+@media screen and (max-width:767px){#auth #auth-left{padding:5rem}}
+@media screen and (max-width:576px){#auth #auth-left{padding:5rem 3rem}}
+
+.form-check{display:block;min-height:1.5rem;padding-left:4rem}
+.form-check .form-check-label1{font-size:1.35rem;margin-bottom:0.5rem;font-family:"Open Sans"}
+.form-check .form-check-input{float:left;margin-left:-1.7em}
+
+.h-10{
+  height:10%;
+}
+.h-90{
+  height:90%;
+}
+
+/* Graph Layout ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+.div-for-charts{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+#histogram {
+  flex-grow: 1
+}
+#map-graph {
+  flex-grow: 1
+}
+.mapboxgl-canvas, .mapboxgl-map {
+  min-width: 100%;
+}
+/* Graph Control Objects ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+.div-user-controls {
+  padding-left: 55px;
+  padding-top: 64px;
+}
+.div-for-dropdown {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.div-for-slider {
+  width: 97%;
+  text-align: center;
+}
+.logo {
+  height: 35px;
+  padding-bottom: 12px;
+  margin-left: 8px;
+}
+.Select-control, .Select-menu-outer, .Select-multi-value-wrapper, .select-up, .is-open .Select-control {
+  background-color: #1E1E1E;
+  color: white;
+}
+
+#bar-selector .Select-multi-value-wrapper{
+  max-height: 82px;
+  overflow-y: auto;
+  margin: 0px 0px -3px 0px;
+}
+
+.Select-control{
+  border: 0.5px solid #dbdbdb44;
+}
+
+.has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label{
+  color: white;
+}
+._dash-app-content {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+}
+.has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label{
+  color: #d8d8d8;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+
+#date {
+  background-color: #1e1e1e;
+  font-family: "Open Sans";
+  font-weight: 400;
+  color: #dbdbdb;
+  border: 0.5px solid #dbdbdb44;
+}
+
+#date-picker{
+  width: 100%;
+}
+
+._dash-undo-redo {
+  display: none;
+}
+.DateInput.DateInput_1{
+  width: 100%;
+}
+.SingleDatePickerInput__withBorder{
+  border:none;
+}
+
+.DateInput.DateInput_1 {
+  background-color: #1e1e1e;
+}
+
+.SingleDatePickerInput__withBorder {
+  border-radius: 3px;
+  color: #dbdbdb;
+  background: #1e1e1e;
+  background-color: #1e1e1e;
+}
+.SingleDatePickerInput.SingleDatePickerInput_1.SingleDatePickerInput__withBorder.SingleDatePickerInput__withBorder_2 {
+  border: 0.0px solid #dbdbdb;
+  display: block;
+}
+.SingleDatePicker_1 {
+  border: 0.0px solid #dbdbdb;
+  display: block;
+}
+
+.SingleDatePicker_picker, .SingleDatePicker_picker_1, .SingleDatePicker_picker__directionLeft,
+.SingleDatePicker_picker__directionLeft_2{
+  filter:invert(100%);
+}
+
+/* For Mobile Phones and small screens ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+@media only screen and (max-width: 768px) {
+  .four, .eight {
+      min-width: 100%;
+ }
+  h1, h2, h3, p {
+      text-align: center;
+ }
+  body {
+      display: block;
+      margin: 0px;
+      overflow-y: scroll;
+  }
+  .div-for-charts {
+      padding: 0px;
+      width: 100%;
+      text-align: center;
+ }
+
+ .div-user-controls {
+    padding: 32px;
+ }
+
+ .side-by-side{
+    display: inline-block;
+    width: 48%;
+  }
+
+
+ .side-by-side-right{
+    display: inline-block;
+    width: 48%;
+    float:right;
+  }
+  .div-for-charts{
+    margin: 0px;
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px !important;
+  display: block !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1e1e1e !important;
+  border-radius: 10px !important;
+  display: block !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d8d8d870 !important;
+}
+
+.CalendarMonth_table td {
+  padding: unset;
+}
