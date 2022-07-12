@@ -1,6 +1,7 @@
 from dash import Dash, dcc, html, Input, Output, State
 #import os
 from docx import Document
+from docx.enum.text import WD_COLOR_INDEX
 import copy
 #from flask import Flask#, send_from_directory
 # from functions.xml_parser import xml_parser
@@ -27,43 +28,59 @@ def run_style(run):
 #    if not run.font.color.ColorFormat.type == "None":
 #        style[color] = run.font.color.ColorFormat.rgb # https://python-docx.readthedocs.io/en/latest/api/shared.html#docx.shared.RGBColor
     if not run.font.highlight_color is None:
+        #print(run.font.highlight_color)
         match run.font.highlight_color:
-            case "AUTO":
+            case WD_COLOR_INDEX.AUTO:
+                print(run.text + ": AUTO")
                 style["background-color"]=""
-            case "BLACK":
+            case WD_COLOR_INDEX.BLACK:
+                print(run.text + ": BLACK")
                 style["background-color"]="black"
-            case "BLUE":
+            case WD_COLOR_INDEX.BLUE:
+                print(run.text + ": BLUE")
                 style["background-color"]="blue"
-            case "BRIGHT_GREEN":
-                style["background-color"]=""
-            case "DARK_BLUE":
-                style["background-color"]=""
-            case "DARK_RED":
-                style["background-color"]=""
-            case "DARK_YELLOW":
-                style["background-color"]=""
-            case "GRAY_25":
-                style["background-color"]=""
-            case "GRAY_50":
-                style["background-color"]=""
-            case "GREEN":
-                style["background-color"]=""
-            case "PINK":
-                style["background-color"]=""
-            case "RED":
-                style["background-color"]=""
-            case "TEAL":
-                style["background-color"]=""
-            case "TURQUOISE":
-                style["background-color"]=""
-            case "VIOLET":
-                style["background-color"]=""
-            case "WHITE":
-                style["background-color"]=""
-            case "YELLOW":
-                style["background-color"]=""
-
-        style["background-color"] = run.font.highlight_color
+            case WD_COLOR_INDEX.BRIGHT_GREEN:
+                print(run.text + ": BRIGHT_GREEN")
+                style["background-color"]="#00FF00"
+            case WD_COLOR_INDEX.DARK_BLUE:
+                print(run.text + ": DARK_BLUE")
+                style["background-color"]="#000080"
+            case WD_COLOR_INDEX.DARK_RED:
+                print(run.text + ": DARK_RED")
+                style["background-color"]="#800000"
+            case WD_COLOR_INDEX.DARK_YELLOW:
+                print(run.text + ": DARK_YELLOW")
+                style["background-color"]="#808000"
+            case WD_COLOR_INDEX.GRAY_25:
+                print(run.text + ": GRAY_25")
+                style["background-color"]="#C0C0C0"
+            case WD_COLOR_INDEX.GRAY_50:
+                print(run.text + ": GRAY_50")
+                style["background-color"]="#808080"
+            case WD_COLOR_INDEX.GREEN:
+                print(run.text + ": GREEN")
+                style["background-color"]="#008000"
+            case WD_COLOR_INDEX.PINK:
+                print(run.text + ": PINK")
+                style["background-color"]="#FF00FF"
+            case WD_COLOR_INDEX.RED:
+                print(run.text + ": RED")
+                style["background-color"]="#FF0000"
+            case WD_COLOR_INDEX.TEAL:
+                print(run.text + ": TEAL")
+                style["background-color"]="#008080"
+            case WD_COLOR_INDEX.TURQUOISE:
+                print(run.text + ": TURQUOISE")
+                style["background-color"]="#00FFFF"
+            case WD_COLOR_INDEX.VIOLET:
+                print(run.text + ": VIOLET")
+                style["background-color"]="#800080"
+            case WD_COLOR_INDEX.WHITE:
+                print(run.text + ": WHITE")
+                style["background-color"]="#FFFFFF"
+            case WD_COLOR_INDEX.YELLOW:
+                print(run.text + ": YELLOW")
+                style["background-color"]="#FFFF00"
     if not run.font.size is None:
         style["font-size"] = str(run.font.size.pt) + "pt"
     if run.font.small_caps:
