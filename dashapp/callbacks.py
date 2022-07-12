@@ -31,55 +31,55 @@ def run_style(run):
         #print(run.font.highlight_color)
         match run.font.highlight_color:
             case WD_COLOR_INDEX.AUTO:
-                print(run.text + ": AUTO")
+                #print(run.text + ": AUTO")
                 style["background-color"]=""
             case WD_COLOR_INDEX.BLACK:
-                print(run.text + ": BLACK")
+                #print(run.text + ": BLACK")
                 style["background-color"]="black"
             case WD_COLOR_INDEX.BLUE:
-                print(run.text + ": BLUE")
+                #print(run.text + ": BLUE")
                 style["background-color"]="blue"
             case WD_COLOR_INDEX.BRIGHT_GREEN:
-                print(run.text + ": BRIGHT_GREEN")
+                #print(run.text + ": BRIGHT_GREEN")
                 style["background-color"]="#00FF00"
             case WD_COLOR_INDEX.DARK_BLUE:
-                print(run.text + ": DARK_BLUE")
+                #print(run.text + ": DARK_BLUE")
                 style["background-color"]="#000080"
             case WD_COLOR_INDEX.DARK_RED:
-                print(run.text + ": DARK_RED")
+                #print(run.text + ": DARK_RED")
                 style["background-color"]="#800000"
             case WD_COLOR_INDEX.DARK_YELLOW:
-                print(run.text + ": DARK_YELLOW")
+                #print(run.text + ": DARK_YELLOW")
                 style["background-color"]="#808000"
             case WD_COLOR_INDEX.GRAY_25:
-                print(run.text + ": GRAY_25")
+                #print(run.text + ": GRAY_25")
                 style["background-color"]="#C0C0C0"
             case WD_COLOR_INDEX.GRAY_50:
-                print(run.text + ": GRAY_50")
+                #print(run.text + ": GRAY_50")
                 style["background-color"]="#808080"
             case WD_COLOR_INDEX.GREEN:
-                print(run.text + ": GREEN")
+                #print(run.text + ": GREEN")
                 style["background-color"]="#008000"
             case WD_COLOR_INDEX.PINK:
-                print(run.text + ": PINK")
+                #print(run.text + ": PINK")
                 style["background-color"]="#FF00FF"
             case WD_COLOR_INDEX.RED:
-                print(run.text + ": RED")
+                #print(run.text + ": RED")
                 style["background-color"]="#FF0000"
             case WD_COLOR_INDEX.TEAL:
-                print(run.text + ": TEAL")
+                #print(run.text + ": TEAL")
                 style["background-color"]="#008080"
             case WD_COLOR_INDEX.TURQUOISE:
-                print(run.text + ": TURQUOISE")
+                #print(run.text + ": TURQUOISE")
                 style["background-color"]="#00FFFF"
             case WD_COLOR_INDEX.VIOLET:
-                print(run.text + ": VIOLET")
+                #print(run.text + ": VIOLET")
                 style["background-color"]="#800080"
             case WD_COLOR_INDEX.WHITE:
-                print(run.text + ": WHITE")
+                #print(run.text + ": WHITE")
                 style["background-color"]="#FFFFFF"
             case WD_COLOR_INDEX.YELLOW:
-                print(run.text + ": YELLOW")
+                #print(run.text + ": YELLOW")
                 style["background-color"]="#FFFF00"
     if not run.font.size is None:
         style["font-size"] = str(run.font.size.pt) + "pt"
