@@ -38,79 +38,80 @@ logo = html.Span(
     ]
 )
 
-input_panel = [
-    html.A(
-        html.Img(
-            className="logo",
-            #src=app.get_asset_url("dash-logo-new.png"),
-        ),
-        href="https://plotly.com/dash/",
-    ),
-    html.H1(className="auth-title",children=["SLAM Tool"]),
-    html.P(className="auth-subtitle mb-5",
-        children=["""Select the applicable language types, upload a document, then click ready to have it analyzed for inappropriate language."""]
-    ),
-    html.Div(className="mb-5 mt-5",
-        children=[
-            html.H2(className="card-title",children=["SLAM Language Types:"],),
-            html.P(className="auth-subtitle mb-5",
-                children=["This component is inactive."],style={'font-style':'italic'}),
-            html.Div(style={'margin-top':'1em','padding-left':'12px'},
-                children=[
-                    switches,
-                    old_checklist
-                ]
-
-            )
-        ]
-    ), #language picker
-    html.Div(
-        className="mb-5 mt-5",
-        children=[
-            html.H2("Upload SOW"),
-            dcc.Upload(
-                id="upload-data",
-                children=[
-                    html.Div(style={"font-family":"Open Sans",'font-size':'1.1em','color':'#777'},
-                        children=["Drag and drop or click to select a file to upload."]
-                    )
-                ],
-                style={
-                    #"width": "100%",
-                    "height": "60px",
-                    "lineHeight": "60px",
-                    "borderWidth": "1px",
-                    "borderStyle": "dashed",
-                    "borderRadius": "5px",
-                    "textAlign": "center",
-                    "margin": "12px",
-                },
-                multiple=True,
+input_panel = html.Div(id="auth-left",
+    children=[
+        html.A(
+            html.Img(
+                className="logo",
+                #src=app.get_asset_url("dash-logo-new.png"),
             ),
-        ]
-    ), #upload button
-    html.Div(className="mb-5 mt-6",
-        children=[
-            html.P(id="file-list")
-        ]),
-    html.Div(className="mb-5 mt-6",
-        children=[
-            dbc.ButtonGroup(
-                className="vstack gap-4 col-md-5",
-                style={
-                    'height':'10rem',
-                    'width':'100%',
-                    'font-family':'Open Sans',
-                    'padding-left':'12px',
-                    'padding-right':'12px'
-                },
-                children=[
-                    dbc.Button(className="align-self-center",id='ready',color="primary",children=["Ready"],style={'width':'50%','font-size':'1.5rem'}),
-                    dbc.Button(className="align-self-center",id="restart",color="secondary",children=["Start Over"],style={'width':'50%','font-size':'1.5rem'})
-                ]
-            )
-        ]
-    )]
+            href="https://plotly.com/dash/",
+        ),
+        html.H1(className="auth-title",children=["SLAM Tool"]),
+        html.P(className="auth-subtitle mb-5",
+            children=["""Select the applicable language types, upload a document, then click ready to have it analyzed for inappropriate language."""]
+        ),
+        html.Div(className="mb-5 mt-5",
+            children=[
+                html.H2(className="card-title",children=["SLAM Language Types:"],),
+                html.P(className="auth-subtitle mb-5",
+                    children=["This component is inactive."],style={'font-style':'italic'}),
+                html.Div(style={'margin-top':'1em','padding-left':'12px'},
+                    children=[
+                        switches,
+                        old_checklist
+                    ]
+
+                )
+            ]
+        ), #language picker
+        html.Div(
+            className="mb-5 mt-5",
+            children=[
+                html.H2("Upload SOW"),
+                dcc.Upload(
+                    id="upload-data",
+                    children=[
+                        html.Div(style={"font-family":"Open Sans",'font-size':'1.1em','color':'#777'},
+                            children=["Drag and drop or click to select a file to upload."]
+                        )
+                    ],
+                    style={
+                        #"width": "100%",
+                        "height": "60px",
+                        "lineHeight": "60px",
+                        "borderWidth": "1px",
+                        "borderStyle": "dashed",
+                        "borderRadius": "5px",
+                        "textAlign": "center",
+                        "margin": "12px",
+                    },
+                    multiple=True,
+                ),
+            ]
+        ), #upload button
+        html.Div(className="mb-5 mt-6",
+            children=[
+                html.P(id="file-list")
+            ]),
+        html.Div(className="mb-5 mt-6",
+            children=[
+                dbc.ButtonGroup(
+                    className="vstack gap-4 col-md-5",
+                    style={
+                        'height':'10rem',
+                        'width':'100%',
+                        'font-family':'Open Sans',
+                        'padding-left':'12px',
+                        'padding-right':'12px'
+                    },
+                    children=[
+                        dbc.Button(className="align-self-center",id='ready',color="primary",children=["Ready"],style={'width':'50%','font-size':'1.5rem'}),
+                        dbc.Button(className="align-self-center",id="restart",color="secondary",children=["Start Over"],style={'width':'50%','font-size':'1.5rem'})
+                    ]
+                )
+            ]
+        )])
 
 chart_card = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':'center'},
     children=[
@@ -183,11 +184,7 @@ main_layout = html.Div(id="auth",
         dbc.Row(className="h-100",
             children=[
                 html.Div(className="col-lg-5 col-12", # Column for user controls
-                    children=[
-                        html.Div(id="auth-left",
-                            children=input_panel,
-                        ),
-                    ],
+                    children=input_panel,
                 ),
                 html.Div(className="col-lg-7 d-none d-lg-block", # Column for app graphs and plots
                     id="auth-right",
