@@ -158,14 +158,16 @@ def register_callbacks(app, flask=True):
                                 if values in run.text:
                                     #print("Run: " + run.text + "_____End Run_____")
                                     targetwords[key]+=1
-            print(file + " has " + str(targetwords) + " mismatched words.")
+            #print(file + " has " + str(targetwords) + " mismatched words.")
             os.remove(files[file])         #will need to move once we get the download function up and running
             items = []
+            keyword_outline = []
             for key in targetwords:
-                items.append(html.P(key + ": "))
-                items.append(html.Ul(
+                keyword_outline.append(html.P(key + ": "))
+                keyword_outline.append(html.Ul(
                     children=[html.Li(str(targetwords[key][key1])+ " " + key1 + " keywords.") for key1 in targetwords[key]]
                 ))
+
             for paragraph in doc.paragraphs:
                 items.append(
                     para_style(paragraph)
