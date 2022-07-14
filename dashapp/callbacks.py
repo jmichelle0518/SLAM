@@ -3,6 +3,9 @@ from dash import Dash, dcc, html, Input, Output, State
 from docx import Document
 from docx.enum.text import WD_COLOR_INDEX
 import copy
+import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
 #from flask import Flask#, send_from_directory
 # from functions.xml_parser import xml_parser
 from app.functions.upload_files import file_download_link, save_file, uploaded_files
@@ -29,58 +32,57 @@ def run_style(run):
 #        style[color] = run.font.color.ColorFormat.rgb # https://python-docx.readthedocs.io/en/latest/api/shared.html#docx.shared.RGBColor
     if not run.font.highlight_color is None:
         #print(run.font.highlight_color)
-        match run.font.highlight_color:
-            case WD_COLOR_INDEX.AUTO:
+        if run.font.highlight_color is WD_COLOR_INDEX.AUTO:
                 #print(run.text + ": AUTO")
-                style["background-color"]=""
-            case WD_COLOR_INDEX.BLACK:
+            style["background-color"]=""
+        if run.font.highlight_color is WD_COLOR_INDEX.BLACK:
                 #print(run.text + ": BLACK")
-                style["background-color"]="black"
-            case WD_COLOR_INDEX.BLUE:
+            style["background-color"]="black"
+        if run.font.highlight_color is WD_COLOR_INDEX.BLUE:
                 #print(run.text + ": BLUE")
-                style["background-color"]="blue"
-            case WD_COLOR_INDEX.BRIGHT_GREEN:
+            style["background-color"]="blue"
+        if run.font.highlight_color is WD_COLOR_INDEX.BRIGHT_GREEN:
                 #print(run.text + ": BRIGHT_GREEN")
-                style["background-color"]="#00FF00"
-            case WD_COLOR_INDEX.DARK_BLUE:
+            style["background-color"]="#00FF00"
+        if run.font.highlight_color is WD_COLOR_INDEX.DARK_BLUE:
                 #print(run.text + ": DARK_BLUE")
-                style["background-color"]="#000080"
-            case WD_COLOR_INDEX.DARK_RED:
+            style["background-color"]="#000080"
+        if run.font.highlight_color is WD_COLOR_INDEX.DARK_RED:
                 #print(run.text + ": DARK_RED")
-                style["background-color"]="#800000"
-            case WD_COLOR_INDEX.DARK_YELLOW:
+            style["background-color"]="#800000"
+        if run.font.highlight_color is WD_COLOR_INDEX.DARK_YELLOW:
                 #print(run.text + ": DARK_YELLOW")
-                style["background-color"]="#808000"
-            case WD_COLOR_INDEX.GRAY_25:
+            style["background-color"]="#808000"
+        if run.font.highlight_color is WD_COLOR_INDEX.GRAY_25:
                 #print(run.text + ": GRAY_25")
-                style["background-color"]="#C0C0C0"
-            case WD_COLOR_INDEX.GRAY_50:
+            style["background-color"]="#C0C0C0"
+        if run.font.highlight_color is WD_COLOR_INDEX.GRAY_50:
                 #print(run.text + ": GRAY_50")
-                style["background-color"]="#808080"
-            case WD_COLOR_INDEX.GREEN:
+            style["background-color"]="#808080"
+        if run.font.highlight_color is WD_COLOR_INDEX.GREEN:
                 #print(run.text + ": GREEN")
-                style["background-color"]="#008000"
-            case WD_COLOR_INDEX.PINK:
+            style["background-color"]="#008000"
+        if run.font.highlight_color is WD_COLOR_INDEX.PINK:
                 #print(run.text + ": PINK")
-                style["background-color"]="#FF00FF"
-            case WD_COLOR_INDEX.RED:
+            style["background-color"]="#FF00FF"
+        if run.font.highlight_color is WD_COLOR_INDEX.RED:
                 #print(run.text + ": RED")
-                style["background-color"]="#FF0000"
-            case WD_COLOR_INDEX.TEAL:
+            style["background-color"]="#FF0000"
+        if run.font.highlight_color is WD_COLOR_INDEX.TEAL:
                 #print(run.text + ": TEAL")
-                style["background-color"]="#008080"
-            case WD_COLOR_INDEX.TURQUOISE:
+            style["background-color"]="#008080"
+        if run.font.highlight_color is WD_COLOR_INDEX.TURQUOISE:
                 #print(run.text + ": TURQUOISE")
-                style["background-color"]="#00FFFF"
-            case WD_COLOR_INDEX.VIOLET:
+            style["background-color"]="#00FFFF"
+        if run.font.highlight_color is WD_COLOR_INDEX.VIOLET:
                 #print(run.text + ": VIOLET")
-                style["background-color"]="#800080"
-            case WD_COLOR_INDEX.WHITE:
+            style["background-color"]="#800080"
+        if run.font.highlight_color is WD_COLOR_INDEX.WHITE:
                 #print(run.text + ": WHITE")
-                style["background-color"]="#FFFFFF"
-            case WD_COLOR_INDEX.YELLOW:
+            style["background-color"]="#FFFFFF"
+        if run.font.highlight_color is WD_COLOR_INDEX.YELLOW:
                 #print(run.text + ": YELLOW")
-                style["background-color"]="#FFFF00"
+            style["background-color"]="#FFFF00"
     if not run.font.size is None:
         style["font-size"] = str(run.font.size.pt) + "pt"
     if run.font.small_caps:
@@ -89,16 +91,15 @@ def run_style(run):
 
 def para_style(para):
     document_body=""
-    match para.style.name:
-        case "Heading 1":
+    if para.style.name == "Heading 1":
             #para_contents=html.H1(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
-            return html.H1(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
-        case "Heading 2":
-            return html.H2(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
-        case "Normal":
-            return html.P(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
-        case _:
-            return html.P(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
+        return html.H1(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
+    if para.style.name == "Heading 2":
+        return html.H2(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
+    if para.style.name == "Normal":
+        return html.P(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
+    else:
+        return html.P(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
 
 def register_callbacks(app, flask=True):
     @app.callback(                          # callback on upload file chosen
@@ -119,7 +120,8 @@ def register_callbacks(app, flask=True):
             return [html.Li(file_download_link(filename)) for filename in files], [name.split('.')[0] for name in uploaded_filenames]
 
     @app.callback(
-        Output("text-preview","children"),
+        #[
+            Output("text-preview","children"),#Output("bar","figure")],
         [Input("language_picker","value"),Input("ready","n_clicks")]
     )
     def newfunc(values,n):
@@ -172,4 +174,13 @@ def register_callbacks(app, flask=True):
                 items.append(
                     para_style(paragraph)
                 )
-            return items
+
+            df = {key: pd.Series(val) for key, val in targetwords.items() }
+            df2 = pd.DataFrame.from_dict(targetwords, orient="index")
+            print(df)
+            print(df2)
+
+            df3 = pd.DataFrame([{'Category':{},'Keyword':{},'Value':{}}])
+            # for each key in targetwords, concatenate a row
+
+            return items#, go.Figure(px.bar(df))
