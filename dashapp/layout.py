@@ -1,16 +1,11 @@
 from dash import dcc
 from dash import html
 import dash_bootstrap_components as dbc
-
-badwords = {
-    "type1":["neat","cool"],
-    "type2":["and","or","but"],
-    "type3":["word","them"]
-    }
+import plotly.express as px
 
 switches = dbc.Checklist(
     label_style={'color':'#CCC'},
-    options=list(badwords.keys()),
+    #options=list(badwords.keys()),
     value=[],
     id="switches-input",
     switch=True,
@@ -20,7 +15,7 @@ old_checklist = dcc.Checklist(
     className="form-check mb-5",
     inputClassName="form-check-input",
     labelClassName="form-check-label1",
-    options=list(badwords.keys()),
+    #options=list(badwords.keys()),
     value=[],
     id='language_picker',
     inline=False
@@ -51,14 +46,14 @@ input_panel = html.Div(id="auth-left",
         html.P(className="auth-subtitle mb-5",
             children=["""Select the applicable language types, upload a document, then click ready to have it analyzed for inappropriate language."""]
         ),
-        html.Div(className="mb-5 mt-5",
+        html.Div(className="my-5",
             children=[
                 html.H2(className="card-title",children=["SLAM Language Types:"],),
                 html.P(className="auth-subtitle mb-5",
                     children=["This component is inactive."],style={'font-style':'italic'}),
                 html.Div(style={'margin-top':'1em','padding-left':'12px'},
                     children=[
-                        switches,
+                        #switches,
                         old_checklist
                     ]
 
@@ -126,14 +121,8 @@ chart_card = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':'c
                 html.Div(className="card-body",
                     children=[
                         dcc.Graph(
-                            id="bar",
-                            style={'max-height':'400px'},
-                            figure={
-                                'layout':{
-                                    'height':'48%',
-                                    'margin':'0'
-                                }
-                            }
+                            #className="ratio ratio-16x9",
+                            id="bar"
                         )
                     ]
                 )
@@ -142,15 +131,15 @@ chart_card = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':'c
     ]
 )
 
-preview_pane = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':'center','padding':'1rem'},
+preview_pane = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':'center'},
     children=[
         html.Div(className="card",
             children=[
                 html.Div(className="card-body",
                     children=[
-                        html.H3(className="card-title",style={'text-align':'center'},
+                        html.H3(className="card-title",id="preview-title",style={'text-align':'center'},
                             children=["Document Preview"]),
-                        html.H4(className="card-subtitle mb-3", id="doc-title",children=["Hi"]),
+                        #html.H4(className="card-subtitle mb-3", id="doc-title",children=["Hi"]),
                         html.P(className="card-text", id="text-preview",
                             children=[
                                 "This is a bunch of text to check and see how the wrapping looks and whether I like this text class."
@@ -181,7 +170,7 @@ def create_header_layout():
 
 main_layout = html.Div(id="auth",
     children=[
-        dbc.Row(className="h-100",
+        dbc.Row(className="",
             children=[
                 html.Div(className="col-lg-5 col-12", # Column for user controls
                     children=input_panel,
@@ -190,16 +179,12 @@ main_layout = html.Div(id="auth",
                     id="auth-right",
                     children=[
                         html.Div(#id="auth-right",
-                            className="p-5",
+                            className="p-5 div-for-charts",
                             #style={'padding':'2rem'},
                             children=[
-                                dbc.Row( # chart row
-                                    className="h-50",
-                                    children=[
-                                        #chart_card
-                                    ]), # chart
+                                #dbc.Row( # chart row className="", children=[chart_card]), # chart
                                 dbc.Row( # preview pane row
-                                    className="h-50",
+                                    className="",
                                     children=[
                                         preview_pane
                                     ]
@@ -220,7 +205,7 @@ def serve_layout():
             dcc.Location(id='url',refresh=False),
             html.Div([
                 create_header_layout(),
-            ], id='header-container', className='header h-10'
+            ], id='header-container', className='header h-5'
             ),
             main_layout
         ],
