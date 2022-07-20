@@ -1,0 +1,6 @@
+*.swp
+__pycache__
+.ipynb_checkpoints
+*secret*
+*.docx
+*.html
