@@ -12,7 +12,7 @@ switches = dbc.Checklist(
 )
 
 old_checklist = dcc.Checklist(
-    className="form-check mb-5",
+    className="form-check mb-2",
     inputClassName="form-check-input",
     labelClassName="form-check-label1",
     #options=list(badwords.keys()),
@@ -35,22 +35,26 @@ logo = html.Span(
 
 input_panel = html.Div(id="auth-left",
     children=[
-        html.A(
-            html.Img(
-                className="logo",
-                #src=app.get_asset_url("dash-logo-new.png"),
-            ),
-            href="https://plotly.com/dash/",
+        html.Div(
+            className="",
+            children=[html.A(
+                html.Img(
+                    className="logo",
+                    #src=app.get_asset_url("dash-logo-new.png"),
+                ),
+                href="https://plotly.com/dash/",
+            ),]
         ),
         html.H1(className="auth-title",children=["SLAM Tool"]),
-        html.P(className="auth-subtitle mb-5",
-            children=["""Select the applicable language types, upload a document, then click ready to have it analyzed for inappropriate language."""]
+        html.P(className="auth-subtitle",
+            children=["""Select the applicable language types, upload a document,
+            then click ready to have it analyzed for inappropriate language."""]
         ),
-        html.Div(className="my-5",
+        html.Div(className="my-4",
             children=[
                 html.H2(className="card-title",children=["SLAM Language Types:"],),
-                html.P(className="auth-subtitle mb-5",
-                    children=["This component is inactive."],style={'font-style':'italic'}),
+                html.P(className="auth-subtitle",
+                    children=["Which appropriation categories apply to this SOW?"]),
                 html.Div(style={'margin-top':'1em','padding-left':'12px'},
                     children=[
                         #switches,
@@ -61,48 +65,45 @@ input_panel = html.Div(id="auth-left",
             ]
         ), #language picker
         html.Div(
-            className="mb-5 mt-5",
+            className="my-4",
             children=[
                 html.H2("Upload SOW"),
                 dcc.Upload(
                     id="upload-data",
                     children=[
-                        html.Div(style={"font-family":"Open Sans",'font-size':'1.1em','color':'#777'},
+                        html.Div(style={'font-size':'1.1em','color':'#777'},
                             children=["Drag and drop or click to select a file to upload."]
                         )
                     ],
                     style={
-                        #"width": "100%",
-                        "height": "60px",
-                        "lineHeight": "60px",
+                        "padding":"0.75rem 1.5rem",
+                        "lineHeight": "1.5rem",
                         "borderWidth": "1px",
                         "borderStyle": "dashed",
-                        "borderRadius": "5px",
+                        "borderRadius": "0.5rem",
                         "textAlign": "center",
-                        "margin": "12px",
+                        "margin": "1rem",
                     },
                     multiple=True,
                 ),
             ]
         ), #upload button
-        html.Div(className="mb-5 mt-6",
+        html.Div(className="mb-4",
             children=[
                 html.P(id="file-list")
             ]),
-        html.Div(className="mb-5 mt-6",
+        html.Div(className="mb-4",
             children=[
                 dbc.ButtonGroup(
-                    className="vstack gap-4 col-md-5",
+                    className="gap-4 col-md-5",
                     style={
-                        'height':'10rem',
+                        'height':'5rem',
                         'width':'100%',
-                        'font-family':'Open Sans',
-                        'padding-left':'12px',
                         'padding-right':'12px'
                     },
                     children=[
-                        dbc.Button(className="align-self-center",id='ready',color="primary",children=["Ready"],style={'width':'50%','font-size':'1.5rem'}),
-                        dbc.Button(className="align-self-center",id="restart",color="secondary",children=["Start Over"],style={'width':'50%','font-size':'1.5rem'})
+                        dbc.Button(className="align-self-center p-1",id='ready',color="primary",children=["Ready"],style={'width':'49%','font-size':'1.3rem'}),
+                        dbc.Button(className="align-self-center p-1",id="restart",color="secondary",children=["Start Over"],style={'width':'49%','font-size':'1.3rem'})
                     ]
                 )
             ]
@@ -155,20 +156,23 @@ preview_pane = dbc.Col(className="col-md-12", style={'margin-top':'2em','align':
 def create_header_layout():
     header_layout = html.Div(id="header",
         children=[
-        html.H1([
-            html.Img(src="", width="30", style={'marginRight':'8px', 'color':'white'}),
-            dcc.Link('IMAGINARY COMPANY',href='/',refresh=True, id='app_title')
-        ]),
+        html.H3(
+            id="header-title", style={"vertical-align":"middle","-ms-transform": "translateY(20%)","transform": "translateY(20%)"},
+            children=[
+                html.Img(src="", width="30", style={'marginRight':'8px', 'color':'white'}),
+                dcc.Link('IMAGINARY COMPANY',href='/',refresh=True, id='app_title')
+            ]),
         html.Div(id='logos',children=[
             logo
         ]),
         ],
-        className='d-flex',
-        style={'margin':'0','padding':'1rem','background-color':'#16244e','height':'100%'}
+        className='d-flex px-5',
+        style={'margin':'0','background-color':'#16244e','height':'100%'}
     )
     return header_layout
 
 main_layout = html.Div(id="auth",
+    #className="h-90",
     children=[
         dbc.Row(className="",
             children=[

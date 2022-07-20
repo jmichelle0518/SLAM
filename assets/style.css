@@ -1,31 +1,67 @@
 /* Custom App CSS Below --------------------------------- */
 /*Fonts ––––––––––––––––––––––––––––––––––––––––––––––––––*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 /* Main Layout ––––––––––––––––––––––––––––––––––––––––––––––––––*/
+html{
+  font-size:100%;
+  font-family:Nunito;
+}
 body {
   /*background-color: #1E1E1E;*/
   color: #1E1E1E;
   margin: 0;
   padding: 0;
 }
-h1, h2, h3, h4, h5 {
+/*h1, h2, h3, h4, h5 {
   font-family: "Open Sans";
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 2.1px;
   padding-left: 12px;
 }
+*/
+.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
+    color:#25396f;
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:.5rem;
+    margin-top:2rem;
+}
+
+.h1,h1{
+    font-size:calc(1.25rem + 1.5vw)}
+@media (min-width:1200px){
+    .h1,h1{
+        font-size:2rem
+    }
+}
+.h2,h2{
+    font-size:calc(1.25rem + .9vw)
+}
+@media (min-width:1200px){
+  .h2,h2{font-size:1.8rem}
+}
+.h3,h3{font-size:calc(1.2rem + .6vw)}
+@media (min-width:1200px){.h3,h3{font-size:1.7rem}}
+.h4,h4{font-size:calc(1.2rem + .3vw)}
+@media (min-width:1200px){.h4,h4{font-size:1.5rem}}
+.h5,h5{font-size:1.25rem}
+.h6,h6{font-size:1.2rem}
+
 p {
-  font-family: "Open Sans";
   font-weight: 400;
-  font-size: 14px;
-  padding-left: 12px;
+  font-size: 1rem;
+  /*padding-left: 12px;*/
 }
 a {
   text-decoration: none;
 }
 label{
   display: block;
+}
+
+ul,li{
+  padding-left: 12px;
 }
 
 .bg-grey{
@@ -59,15 +95,17 @@ body{background-color:#fff}
 #auth #auth-right{background:url(../../images/bg/4853433.jpg),linear-gradient(90deg,#2d499d,#3f5491);height:100%}
 #auth #auth-left{padding:5rem 8rem}
 #auth #auth-left .auth-title{font-size:3rem;margin-bottom:1rem}
-#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.1rem;line-height:2.0rem}
+#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.1rem;line-height:1.5rem;margin-bottom:1rem;}
 #auth #auth-left .auth-logo{margin-bottom:7rem}
 #auth #auth-left .auth-logo img{height:2rem}
 #text-preview{color:#222222}
+#preview-title{margin-top:0;}
+#header-title{margin: 0;padding-bottom: 0;vertical-align:middle;height:auto}
 @media screen and (max-width:767px){#auth #auth-left{padding:5rem}}
 @media screen and (max-width:576px){#auth #auth-left{padding:5rem 3rem}}
 
-.form-check{display:block;min-height:1.5rem;padding-left:4rem}
-.form-check .form-check-label1{font-size:1.35rem;margin-bottom:0.5rem;font-family:"Open Sans"}
+.form-check{display:block;min-height:1.5rem;padding-left:3rem}
+.form-check .form-check-label1{font-size:1rem;margin-bottom:0.2rem;font-family:Nunito}
 .form-check .form-check-input{float:left;margin-left:-1.7em}
 
 .h-5{
@@ -78,7 +116,7 @@ body{background-color:#fff}
   height:10vh;
 }
 .h-90{
-  height:90%;
+  height:90vh;
 }
 
 /* Graph Layout ––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -132,7 +170,6 @@ body{background-color:#fff}
 .Select-control{
   border: 0.5px solid #dbdbdb44;
 }
-
 .has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label{
   color: white;
 }
@@ -146,7 +183,6 @@ body{background-color:#fff}
   font-weight: 400;
   font-size: 14px;
 }
-
 
 #date {
   background-color: #1e1e1e;
@@ -169,11 +205,9 @@ body{background-color:#fff}
 .SingleDatePickerInput__withBorder{
   border:none;
 }
-
 .DateInput.DateInput_1 {
   background-color: #1e1e1e;
 }
-
 .SingleDatePickerInput__withBorder {
   border-radius: 3px;
   color: #dbdbdb;
@@ -188,9 +222,7 @@ body{background-color:#fff}
   border: 0.0px solid #dbdbdb;
   display: block;
 }
-
-.SingleDatePicker_picker, .SingleDatePicker_picker_1, .SingleDatePicker_picker__directionLeft,
-.SingleDatePicker_picker__directionLeft_2{
+.SingleDatePicker_picker, .SingleDatePicker_picker_1, .SingleDatePicker_picker__directionLeft, .SingleDatePicker_picker__directionLeft_2{
   filter:invert(100%);
 }
 
