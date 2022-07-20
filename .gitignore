@@ -4,3 +4,5 @@ __pycache__
 *secret*
 *.docx
 *.html
+regex.py
+dashapp/outputchecker.py
