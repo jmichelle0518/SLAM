@@ -43,7 +43,7 @@ label{
   border-bottom: none;
 }
 
-.label{font-family:monospace;font-variant:small-caps;}
+.label{font-family:monospace;font-variant:small-caps;display:inline-block;font-size:11px;vertical-align:middle}
 .cat1{background-color: orange !important; color:black !important;}
 .cat2{background-color: midnightblue !important; color: white !important;}
 .cat3{background-color: mediumpurple; color: white;}

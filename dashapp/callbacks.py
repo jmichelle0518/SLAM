@@ -15,16 +15,18 @@ from app.functions.upload_files import file_download_link, save_file, uploaded_f
 #server = Flask(__name__)
 
 badwords = {
-    "type1":[["neat","cool"],'cat1'],
-    "type2":[["and","or","but"],'cat2'],
-    "type3":[["word","them"],'cat3']
+    'Type 1':[["neat","cool"],'cat1','type1'],
+    'Type 2':[["and","or","but"],'cat2', 'type2'],
+    'Type 3':[["word","them"],'cat3','type3']
     }
 
 def run_style(runs, c):
     para = {}
+    new_dict = {}
     index = 0
+    pattern_master = r'\b{}.?.?[.,!:;]?\b'
     for r in runs:
-        print("line 26 == run_style: " + r.text + ".  para is " + str(len(para)) + " runs long")
+        print("line 29 == run_style: " + r.text,end="\n\n") #+ ".  para is " + str(len(para)) + " runs long")
         styles = {}
         if r.bold:
             styles["font-weight"] = "bold"
@@ -92,76 +94,104 @@ def run_style(runs, c):
         if r.font.small_caps:
             styles["font-variant"] = "small-caps"
 
+        '''Mark runs as either containing a keyword
+        from a particular category or not'''
         for cat in c: # for each category selected
             for word in badwords[cat][0]: # for each keyword
-                pattern = re.compile(word)
-                print("line 98 == " + cat + ": " + word)
+                pattern_str = pattern_master.format(word)
+                pattern = re.compile(pattern_str,re.IGNORECASE)
                 if pattern.search(r.text): # if the current keyword is in this run
-                    tempr = r.text.strip().split(" ")   #split the run into individual words
-                    print(tempr)
-                    for w in tempr: # for word in run
-                        print("line 103 == w="+w)
-                        if pattern.search(w): #if the word is a keyword, give it specific style
-                            para[cat+w]={
-                                "text":w + " ",
-                                "style":{},
-                                "isKeyword":True,
-                                "category":cat,
-                                "kw":word,
-                                "className": badwords[cat][1] + " category"
-                            }
-                            print("line 114 == Run had keyword and word was keyword")
+                #if re.search(pattern,r.text,re.IGNORECASE):
+                    if r.text in para.keys(): # if the current run has already been eval'd against at least one keyword
+                        if cat in para[r.text]["categories"]: # if the current category has already been evaluated
+                            #para[r.text]["keywords"][cat].append(word)
+                            para[r.text]["hasKeyword"] = True
                         else:
-                            para[cat+w]={
-                                "text":w + " ",
-                                "style":styles,
-                                "isKeyword":False,
-                                "category":'',
-                                "kw":'',
-                                "className":''
+                            para[r.text]["categories"].append(cat)
+                            para[r.text]["hasKeyword"] = True
+                    else:
+                        para[r.text]={
+                            "text": r.text,
+                            "categories": [cat],
+                            "hasKeyword":True,
+                            #"words":{w: {}}, #for w in re.split(r' ',r.text.strip())},
+                            "style":styles,
+                            "className":""
+                        }
+                else: # if the current keyword isn't in this run
+                    if not r.text in para.keys(): # if this run has already been evaluated, do nothing
+                        para[r.text]={
+                            "text": r.text,
+                            "categories": [],
+                            "hasKeyword":False,
+                            #"words":{w: {} for w in re.split(r' ',r.text.strip())},
+                            "style": styles,
+                            "className":""
+                        }
+        print(para[r.text],end=": ")
+        print(para[r.text]["categories"],end="\n\n")
+
+    ''' build the flatter dictionary that holds
+    all of the runs and split runs to return'''
+    return_para={}
+    for k, v in para.items(): # keys are runs, values are dictionaries describing runs
+        #print(para[k]["hasKeyword"])
+        if para[k]["hasKeyword"]: # if there's a keyword to find in the run
+            para[k]["words"]={}
+            for w in re.split(r' ',para[k]["text"].strip()): # for each word in the run
+                for c in para[k]["categories"]: # for each category/[list of keywords] pair:
+                    for kw in badwords[c][0]: # for each keyword in that category
+                        pattern_str = pattern_master.format(kw) # insert that keyword into the regex
+                        pattern = re.compile(pattern_str,re.IGNORECASE)
+                        #print("line 153 == reassembly required: " + pattern.pattern)
+                        if pattern.match(w): # if the word is a keyword, give it specific style
+                            para[k]["words"][w]={
+                                "text":[w + " ",html.Div(className="label",children=badwords[c][2])],
+                                "style":{},
+                                "hasKeyword":True,
+                                "keyword":{c:kw},
+                                "className": badwords[c][1] + " category"
                             }
-                            print("line 127 == Run had keyword, word was not keyword")
-                        print("line 130 == ")
-                        print(para[cat+w])
-                        print(len(para))
-                    break
-                else:
-                    para[cat+r.text]={
-                        "text":r.text,
-                        "style":styles,
-                        "isKeyword":False,
-                        "category":'',
-                        "kw":'',
-                        "className":''
-                    }
-                    print("line 137 == No Key Word")
-                    print(para[cat+r.text])
-                    print(len(para))
-        #para.append(html.Span(children=[html.Span(r.text)], style = styles))
-        print("line 140 == Line Appended, end of cat checks")
-        #run = html.Span(children=[html.Span(r.text)], style = styles, className = classes)
-    print("line 142 == End of runs in para")
-    print(para)
-    return [html.Span(children=v["text"],style=v["style"],className=v["className"]) for k,v in para.items()]
+                            """print("line 165 == "+w+" | keyword not in current dictionary",end=" ")
+                            print(para[k]["words"][w], end = "\n\n")"""
+                        else: # if the word w does not match the current keyword kw
+                            if w in para[k]["words"].keys(): # if the word has already been accounted for under another keyword
+                                """print("line 169 == "+w+" | seent it, not a current keyword",end=" ")
+                                print(para[k]["words"][w], end = "\n\n")"""
+                                break
+                            else: # if the word has not already been noted in the dictionary
+                                para[k]["words"][w]={
+                                    "text":w + " ",
+                                    "style":styles,
+                                    "hasKeyword":False,
+                                    "kw":{},
+                                    "className": ""
+                                }
+                                """print("line 180 == "+w+" | not a keyword and not in dictionary",end=" ")
+                                print(para[k]["words"][w], end = "\n\n")"""
+                return_para[k+kw+w]=para[k]["words"][w]
+                index+=1
+        else:
+            return_para[k]=v # append as is
+            return_para[k]["text"] += " "
+
+    """print("line 187 == New Dictionary")
+    print(return_para)"""
+    return [html.Span(children=v["text"],style=v["style"],className=v["className"]) for k,v in return_para.items()]
 
 def para_style(para,cats):
-    print("line 143 == para_style: " + para.text)
     if para.style.name == "Heading 1":
-        print("line 145 == H1 " + "".join(cats))
-            #para_contents=html.H1(children=[html.Span(children = [run.text],style = run_style(run)) for run in para.runs])
         return html.H1(children=run_style(para.runs,cats))
     if para.style.name == "Heading 2":
-        print("line 149 == H2 " + "".join(cats))
         return html.H2(children=run_style(para.runs,cats))
-        #children=[html.Span(children = [run.text],style = run_style(run,cats)) for run in para.runs])
     if para.style.name == "Normal":
-        print("line 153 == Normal " + "".join(cats))
         return html.P(children=run_style(para.runs,cats))
     else:
         print("line 156 == Other " + "".join(cats))
         return html.P(children=run_style(para.runs,cats))
 
 def register_callbacks(app, flask=True):
+    print("\n"*5+"~"*30+" New Run "+"~"*30+"\n"*5)
     @app.callback(
         [#Output("switches-input",'options'),
         Output("language_picker",'options')],
@@ -193,43 +223,26 @@ def register_callbacks(app, flask=True):
         [Input("language_picker","value"),Input("ready","n_clicks")]
     )
     def newfunc(checks,n):
-        print("New Run\n")
+        """This function needs to take the language category
+        and uploaded file to start returning data"""
         import os
-        """This function needs to take the language category and uploaded file to start returning data"""
         files = uploaded_files()
-
         runs=""
         targetwords={}
+        """Build the dictionary to hold counts of keywords"""
         for key, v in badwords.items():
             targetwords[key]={}
             for value in v[0]:
                 targetwords[key][value]=0
 
+        """Assess the file for keywords and return augmented text for display"""
         for file in files:
             doc=Document(files[file]) # need to figure out how to reference the path for a specific doc
-            #print("Filename: " + file)
-            docstring = ""
             for paragraph in doc.paragraphs:
-                #print("Paragraph: " + paragraph.text)
-                docstring+=paragraph.text+"<br>"
                 for k, v in badwords.items():
-                    if(isinstance(v,list)):
-                        for value in v[0]:
-                            if value in paragraph.text:
-                                currRuns = copy.copy(paragraph.runs)
-                                paragraph.runs.clear()
-                                targetwords[k][value]+=paragraph.text.count(value)
-
-                    else:
-                        if v in paragraph.text:
-                            currRuns = copy.copy(paragraph.runs)
-                            paragraph.runs.clear()
-
-                            for run in currRuns:
-                                if v in run.text:
-                                    #print("Run: " + run.text + "_____End Run_____")
-                                    targetwords[key]+=1
-            #print(file + " has " + str(targetwords) + " mismatched words.")
+                    for value in v[0]:
+                        if value in paragraph.text:
+                            targetwords[k][value]+=paragraph.text.count(value)
             os.remove(files[file])         #will need to move once we get the download function up and running
             items = []
             keyword_outline = []
@@ -241,16 +254,14 @@ def register_callbacks(app, flask=True):
 
             for paragraph in doc.paragraphs:
                 print("line 209 == " + paragraph.text)
-                items.append(
-                    para_style(paragraph,checks)
-                )
+                items.append(para_style(paragraph,list(set(badwords.keys())-set(checks))))
 
-            df = {key: pd.Series(val) for key, val in targetwords.items() }
-            df2 = pd.DataFrame.from_dict(targetwords, orient="index")
+            #df = {key: pd.Series(val) for key, val in targetwords.items() }
+            #df2 = pd.DataFrame.from_dict(targetwords, orient="index")
             #print(df)
             #print(df2)
 
-            df3 = pd.DataFrame([{'Category':{},'Keyword':{},'Value':{}}])
+            #df3 = pd.DataFrame([{'Category':{},'Keyword':{},'Value':{}}])
             # for each key in targetwords, concatenate a row
             #print(targetwords)
             return items#, go.Figure(px.bar(df))
