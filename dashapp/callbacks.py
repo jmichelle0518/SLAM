@@ -26,7 +26,7 @@ def run_style(runs, c):
     index = 0
     pattern_master = r'\b{}.?.?[.,!:;]?\b'
     for r in runs:
-        print("line 29 == run_style: " + r.text,end="\n\n") #+ ".  para is " + str(len(para)) + " runs long")
+        #print("line 29 == run_style: " + r.text,end="\n\n") #+ ".  para is " + str(len(para)) + " runs long")
         styles = {}
         if r.bold:
             styles["font-weight"] = "bold"
@@ -110,8 +110,8 @@ def run_style(runs, c):
                             "style": styles,
                             "className":""
                         }
-        print(para[r.text],end=": ")
-        print(para[r.text]["categories"],end="\n\n")
+        #print(para[r.text],end=": ")
+        #print(para[r.text]["categories"],end="\n\n")
 
     ''' build the flatter dictionary that holds
     all of the runs and split runs to return'''
@@ -248,4 +248,5 @@ def register_callbacks(app, flask=True):
             #df3 = pd.DataFrame([{'Category':{},'Keyword':{},'Value':{}}])
             # for each key in targetwords, concatenate a row
             #print(targetwords)
+            print("Analysis complete!")
             return items#, go.Figure(px.bar(df))
