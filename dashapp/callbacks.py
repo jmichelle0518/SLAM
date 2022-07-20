@@ -37,57 +37,39 @@ def run_style(runs, c):
         if r.font.all_caps:
             styles["font-variant"] = "small-caps"
         if not r.font.highlight_color is None:
-            #print(run.font.highlight_color)
             if run.font.highlight_color is WD_COLOR_INDEX.AUTO:
-                    #print(run.text + ": AUTO")
                 style["background-color"]=""
             if run.font.highlight_color is WD_COLOR_INDEX.BLACK:
-                    #print(run.text + ": BLACK")
                 style["background-color"]="black"
             if run.font.highlight_color is WD_COLOR_INDEX.BLUE:
-                    #print(run.text + ": BLUE")
                 style["background-color"]="blue"
             if run.font.highlight_color is WD_COLOR_INDEX.BRIGHT_GREEN:
-                    #print(run.text + ": BRIGHT_GREEN")
                 style["background-color"]="#00FF00"
             if run.font.highlight_color is WD_COLOR_INDEX.DARK_BLUE:
-                    #print(run.text + ": DARK_BLUE")
                 style["background-color"]="#000080"
             if run.font.highlight_color is WD_COLOR_INDEX.DARK_RED:
-                    #print(run.text + ": DARK_RED")
                 style["background-color"]="#800000"
             if run.font.highlight_color is WD_COLOR_INDEX.DARK_YELLOW:
-                    #print(run.text + ": DARK_YELLOW")
                 style["background-color"]="#808000"
             if run.font.highlight_color is WD_COLOR_INDEX.GRAY_25:
-                    #print(run.text + ": GRAY_25")
                 style["background-color"]="#C0C0C0"
             if run.font.highlight_color is WD_COLOR_INDEX.GRAY_50:
-                    #print(run.text + ": GRAY_50")
                 style["background-color"]="#808080"
             if run.font.highlight_color is WD_COLOR_INDEX.GREEN:
-                    #print(run.text + ": GREEN")
                 style["background-color"]="#008000"
             if run.font.highlight_color is WD_COLOR_INDEX.PINK:
-                    #print(run.text + ": PINK")
                 style["background-color"]="#FF00FF"
             if run.font.highlight_color is WD_COLOR_INDEX.RED:
-                    #print(run.text + ": RED")
                 style["background-color"]="#FF0000"
             if run.font.highlight_color is WD_COLOR_INDEX.TEAL:
-                    #print(run.text + ": TEAL")
                 style["background-color"]="#008080"
             if run.font.highlight_color is WD_COLOR_INDEX.TURQUOISE:
-                    #print(run.text + ": TURQUOISE")
                 style["background-color"]="#00FFFF"
             if run.font.highlight_color is WD_COLOR_INDEX.VIOLET:
-                    #print(run.text + ": VIOLET")
                 style["background-color"]="#800080"
             if run.font.highlight_color is WD_COLOR_INDEX.WHITE:
-                    #print(run.text + ": WHITE")
                 style["background-color"]="#FFFFFF"
             if run.font.highlight_color is WD_COLOR_INDEX.YELLOW:
-                    #print(run.text + ": YELLOW")
                 style["background-color"]="#FFFF00"
         if not r.font.size is None:
             styles["font-size"] = str(r.font.size.pt) + "pt"
@@ -179,6 +161,9 @@ def run_style(runs, c):
     print(return_para)"""
     return [html.Span(children=v["text"],style=v["style"],className=v["className"]) for k,v in return_para.items()]
 
+
+    return style
+
 def para_style(para,cats):
     if para.style.name == "Heading 1":
         return html.H1(children=run_style(para.runs,cats))
@@ -187,7 +172,6 @@ def para_style(para,cats):
     if para.style.name == "Normal":
         return html.P(children=run_style(para.runs,cats))
     else:
-        print("line 156 == Other " + "".join(cats))
         return html.P(children=run_style(para.runs,cats))
 
 def register_callbacks(app, flask=True):
@@ -253,7 +237,7 @@ def register_callbacks(app, flask=True):
                 ))
 
             for paragraph in doc.paragraphs:
-                print("line 209 == " + paragraph.text)
+                #print("line 240 == " + paragraph.text)
                 items.append(para_style(paragraph,list(set(badwords.keys())-set(checks))))
 
             #df = {key: pd.Series(val) for key, val in targetwords.items() }
